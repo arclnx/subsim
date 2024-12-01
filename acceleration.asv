@@ -1,0 +1,24 @@
+function [Dstate] = acceleration(state)
+% constants
+m = 1; % mass [kg]
+Cd = 1; % coeff of drag
+A = 1; % area [m^2]
+p = 1; % density [kg/m^3]
+
+% state = [x, y, z, dx, dy, dz] [m, m/s]
+% Dstate = [dx, dy, dz, ax, ay, az] [m/s, m/s^2]
+x = state(1);
+y = state(2);
+z = state(3);
+dx = state(4);
+dy = state(5);
+dz = state(6);
+
+% calculations
+ax = (1/2 * p * (uo - us)^2 * Cd * A) * 1/m;
+ay = (1/2 * p * (vo -vs))
+
+Dstate([1 2 3]) = state([4 5 6]);\
+
+
+end
