@@ -41,8 +41,9 @@ data.g = 9.81; % [m/s^2]
 s0 = [0 0 0 0 0 0];
 t = []; y = [];
 
+% run simulation
 tic
-[t, y] = ode45(@(t,y) (acceleration(y, data, cdata)), [0 3600], s0);
+[t, pos] = ode45(@(t,y) (acceleration(y, data, cdata)), [0 3600], s0);
 toc
 
 figure(4)
