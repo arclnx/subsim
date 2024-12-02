@@ -36,8 +36,7 @@ lontest = reshape(lontest, [], 1);
 depthtest = reshape(depthtest, [], 1);
 [uotest, votest] = interpCurrent(lattest,lontest,depthtest, cdata);
 figure(4)
-quiver3(lontest, lattest, -depthtest, uotest, votest, zeros(size(uotest)), 0, ShowArrowHead="off")
-xlabel("Latitude"); ylabel("Longitude"); zlabel("Depth")
+quiver3(lontest, lattest, -depthtest, uotest, votest, zeros(size(uotest)), 0)
 
 %% Simulation
 % constants (change these)
@@ -59,19 +58,17 @@ s0 = [x0 y0 z0 u0 v0 w0];
 tf = 3600;
 
 % solver options
-opts = odeset(RelTol=0.1, AbsTol=1, MinStep=0.1, MaxStep=1);
+opts = odeset(RelTol=0.1, AbsTol=10, MinStep=0.1, MaxStep=10);
 
 % run simulation
 tic
-[t, state] = ode23(@(t,y) (acceleration(y, data, cdata)), [0 3600], s0);
+[t, state] = ode23(@(t,y) (acceleration(y, data, cdata)), [0 100], s0, opts);
 toc
 
 % convert back to geo coordinates
 [sim_lat, sim_lon] = m2geo(state(:,1), state(:,2));
 sim_z = state(:,3);
-figure(5)
-grid on
+figure(4)
 plot3(state(:,1),state(:,2),state(:,3),"-o")
-figure(6)
-plot3(sim_lon, sim_lat, sim_z, "-o")
+% plot3(sim_lon, sim_lat, sim_z, "-o")
 grid on
